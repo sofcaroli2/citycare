@@ -32,7 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 
-password.txt
+.env
 
 .DS_Store
 
