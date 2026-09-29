@@ -8,7 +8,9 @@ import jakarta.persistence.*;
 @Table(name = "users", schema = "public")
 public class Users {
     @Id
-    private UUID user_id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "user_id")
+    private UUID userId;
 
     private String username;
 
@@ -18,12 +20,12 @@ public class Users {
 
     private String residence;
 
-    public UUID getUser_id() {
-        return user_id;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUser_id(UUID user_id) {
-        this.user_id = user_id;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
