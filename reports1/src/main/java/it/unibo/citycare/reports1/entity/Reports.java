@@ -25,7 +25,7 @@ public class Reports {
     @Column(name = "time_report")
     private LocalTime timeReport;
 
-    private String state;
+    private Boolean state;
 
     public UUID getId() {
         return id;
@@ -67,11 +67,11 @@ public class Reports {
         this.userId = userId;
     }
 
-    public String getState() {
+    public Boolean getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(Boolean state) {
         this.state = state;
     }
 
