@@ -14,15 +14,18 @@ public class Reports {
 
     private String title;
 
-    private String description;
+    @Column(name = "description_report")
+    private String descriptionReport;
 
     private String address;
 
-    private UUID user_id;
+    @Column(name = "user_id")
+    private UUID userId;
+
+    @Column(name = "time_report")
+    private LocalTime timeReport;
 
     private String state;
-
-    private LocalTime time;
 
     public UUID getId() {
         return id;
@@ -41,11 +44,11 @@ public class Reports {
     }
 
     public String getDescription() {
-        return description;
+        return descriptionReport;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescription(String descriptionReport) {
+        this.descriptionReport = descriptionReport;
     }
 
     public String getAddress() {
@@ -56,12 +59,12 @@ public class Reports {
         this.address = address;
     }
 
-    public UUID getUser_id() {
-        return user_id;
+    public UUID getUserId() {
+        return userId;
     }
 
-    public void setUser_id(UUID user_id) {
-        this.user_id = user_id;
+    public void setUserId(UUID userId) {
+        this.userId = userId;
     }
 
     public String getState() {
@@ -73,10 +76,10 @@ public class Reports {
     }
 
     public LocalTime getTime() {
-        return time;
+        return timeReport;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setTime(LocalTime timeReport) {
+        this.timeReport = timeReport;
     }
 }
