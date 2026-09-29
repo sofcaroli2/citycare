@@ -16,7 +16,7 @@
 
 	<modules>
 		<module>reports1</module>
-		<!-- <module>solutions2</module> -->
+		<module>solutions2</module>
 	</modules>
 
 	<name/>
