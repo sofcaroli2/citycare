@@ -20,6 +20,9 @@ public class Users {
 
     private String residence;
 
+    @Column(name = "is_admin")
+    private boolean isAdmin;
+
     public UUID getUserId() {
         return userId;
     }
@@ -58,6 +61,14 @@ public class Users {
 
     public void setResidence(String residence) {
         this.residence = residence;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
     }
 
 }
