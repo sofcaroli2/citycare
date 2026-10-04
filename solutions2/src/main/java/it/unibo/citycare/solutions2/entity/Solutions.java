@@ -11,16 +11,6 @@ public class Solutions {
     @Id
     private UUID id;
 
-    private String title;
-
-    @Column(name = "description_report")
-    private String descriptionReport;
-
-    private String address;
-
-    @Column(name = "user_id")
-    private UUID userId;
-
     @Column(name = "time_solution")
     private LocalTime timeSolution;
 
@@ -33,38 +23,6 @@ public class Solutions {
 
     public void setId(UUID id) {
         this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getDescription() {
-        return descriptionReport;
-    }
-
-    public void setDescription(String descriptionReport) {
-        this.descriptionReport = descriptionReport;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public UUID getUserId() {
-        return userId;
-    }
-
-    public void setUserId(UUID userId) {
-        this.userId = userId;
     }
 
     public LocalTime getTime() {
