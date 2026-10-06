@@ -1,5 +1,11 @@
 package it.unibo.citycare.bff.dto;
 
-// public class UsersDTO() {
-    
-// }
+import java.util.UUID;
+
+public record UsersDTO(
+    UUID id,
+    String username,
+    String name,
+    String surname,
+    String residence) {
+}
