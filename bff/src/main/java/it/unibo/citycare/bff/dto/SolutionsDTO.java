@@ -1,6 +1,6 @@
 package it.unibo.citycare.bff.dto;
 
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record SolutionsDTO(
@@ -9,7 +9,7 @@ public record SolutionsDTO(
     String descriptionSolution, 
     String address, 
     UUID userID, 
-    LocalTime timeSolution, 
+    LocalDateTime timeSolution, 
     Boolean state) {
     
 }

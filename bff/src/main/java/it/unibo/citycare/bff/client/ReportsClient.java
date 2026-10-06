@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import it.unibo.citycare.bff.dto.ReportsDTO;
-import it.unibo.citycare.bff.dto.ReportsRequestDTO;
 
 @Component
 public class ReportsClient {
@@ -17,6 +16,8 @@ public class ReportsClient {
         this.restTemplate = restTemplate;
         this.localUrl = localUrl;
     }
+
+    
 
     public ReportsDTO[] getReportsByUserIdAndState(UUID userId, Boolean state) {
         String url = localUrl + "/reports/user/" + userId + "/state/" + state;

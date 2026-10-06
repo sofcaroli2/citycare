@@ -18,10 +18,11 @@ public class ReportsService {
     public ReportsService(ReportsClient reportsClient) {
         this.reportsClient = reportsClient;
     }
-    
+
     @Autowired
     private final ReportsClient reportsClient;
 
+    // trasforma un array di ReportsDTO in una lista di ReportsRequestDTO
     public List<ReportsRequestDTO> getReportsByUserIdAndState(UUID userId, Boolean state) {
         ReportsDTO[] reportsDTO = reportsClient.getReportsByUserIdAndState(userId, state);
         return Arrays.stream(reportsDTO)
@@ -30,9 +31,8 @@ public class ReportsService {
                         reportDTO.title(),
                         reportDTO.descriptionReport(),
                         reportDTO.address(),
-                        reportDTO.timeReport()
-                ))
+                        reportDTO.timeReport()))
                 .collect(Collectors.toList());
     }
-    
+
 }

@@ -4,11 +4,11 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 // selezione di dati necessari al frontend
-public record ReportsRequestDTO(
+public record SolutionsRequestDTO(
     UUID id,
-    String title, 
-    String descriptionReport, 
-    String address, 
-    LocalDateTime timeReport) {
-    
+    String title,
+    String descriptionSolution,
+    String address,
+    LocalDateTime timeSolution
+) {
 }
