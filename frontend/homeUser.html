@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>homeUser</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="d-flex flex-column min-vh-100">
+
+  <header class="bg-white border-bottom shadow-sm mb-3 sticky-top">
+    <div class="container-fluid px-4 py-2">
+      <div class="d-flex align-items-center justify-content-between">
+        <a href="#" class="d-flex align-items-center text-decoration-none text-primary navbar-brand fs-3">
+          <i class="bi bi-geo-alt-fill me-2 fs-2"></i>
+          <span>CityCare</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container-fluid">
+    <div class="sidebar-card p-4 h-100">
+      <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+        <i class="bi bi-plus-circle-fill text-primary fs-4"></i>
+        <h2 class="h5 mb-0 fw-bold">Inserimento Dati</h2>
+      </div>
+
+      <form id="reportForm">
+        <div class="row">
+          <!-- Campo Titolo -->
+          <div class="mb-3 col-6">
+            <label for="title" class="form-label small fw-semibold text-secondary">
+              <i class="bi bi-pencil-square me-1"></i> Titolo
+            </label>
+            <input type="text" class="form-control" id="title" placeholder="Es. Buca su manto stradale" required>
+          </div>
+          <!-- Campo Indirizzo -->
+          <div class="mb-3 col-6">
+            <label for="title" class="form-label small fw-semibold text-secondary">
+              <i class="bi bi-pencil-square me-1"></i> Indirizzo
+            </label>
+            <input type="text" class="form-control" id="title" placeholder="Es. Via Giuseppe Garibaldi 24" required>
+          </div>
+        </div>
+        <!-- Campo Descrizione -->
+        <div class="input-group mb-3">
+          <textarea class="form-control" id="description" rows="3" placeholder="Descrivi il problema..."
+            required></textarea>
+        </div>
+
+        <!-- Nuova Segnalazione -->
+        <div class="text-center">
+          <button type="submit"
+            class="btn btn-primary w-50 btn-custom-submit shadow-sm align-items-center justify-content-center gap-2">
+            <i class="bi bi-plus-lg fs-5"></i>
+            <span>Invia Segnalazione</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="row g-4 pt-2 pb-3">
+
+      <!-- Registro Segnalazioni -->
+      <section class="col-12 col-lg-6">
+        <div class="content-card p-4 flex-fill">
+          <h3 class="h5 mb-3 fw-bold">Le mie Segnalazioni</h3>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col" class="border-0">Titolo</th>
+                  <th scope="col" class="border-0">Descrizione</th>
+                  <th scope="col" class="border-0">Indirizzo</th>
+                  <th scope="col" class="border-0">Data e Ora</th>
+                </tr>
+              </thead>
+              <tbody id="requestsContainer">
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- Registro Soluzioni -->
+      <section class="col-12 col-lg-6">
+        <div class="content-card p-4 flex-fill">
+          <h3 class="h5 mb-3 fw-bold">Soluzioni</h3>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col" class="border-0">Titolo</th>
+                  <th scope="col" class="border-0">Descrizione</th>
+                  <th scope="col" class="border-0">Indirizzo</th>
+                  <th scope="col" class="border-0">Data e Ora</th>
+                </tr>
+              </thead>
+              <tbody id="solutionsContainer">
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-white border-top py-3 text-center text-muted small mt-auto">
+    <div class="container">
+      &copy; 2026 CityCare - Segnalazione Disservizi Residenziali
+    </div>
+  </footer>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="script/homeUser.js"></script>
+</body>
+
+</html>
