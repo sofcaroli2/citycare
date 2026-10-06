@@ -1,9 +1,7 @@
 package it.unibo.citycare.bff.dto;
 
-import java.util.UUID;
-
-public record UsersDTO(
-    UUID userId,
+// selezione di dati necessari al frontend
+public record UsersRequestDTO(
     String username,
     String name,
     String surname,

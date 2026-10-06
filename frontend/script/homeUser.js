@@ -20,6 +20,27 @@ async function getSolutions() {
     return solutions;
 }
 
+async function getUserInfo() {
+    const response = await fetch('/api/citycare/user/9bd1310f-c1d6-488c-9d27-ba156829e6ec', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    });
+    const userInfo = await response.json();
+    return userInfo;
+}
+
+// popola la sezione utente
+async function populateUserInfo() {
+    const userInfo = await getUserInfo();
+    console.log(userInfo);
+    document.getElementById('nome').textContent = userInfo.name;
+    document.getElementById('cognome').textContent = userInfo.surname;
+    document.getElementById('residenza').textContent = userInfo.residence;
+}
+
+
 // popola la tabella delle request
 async function populateRequests() {
     const requests = await getRequests();
@@ -53,9 +74,9 @@ async function populateSolutions() {
             <td>${solution.timeReport}</td>
         `;
         solutionsContainer.appendChild(solutionRow);
-        console.log(solution);
     });
 }
 
 populateRequests();
 populateSolutions();
+populateUserInfo();
