@@ -1,7 +1,7 @@
 package it.unibo.citycare.reports1.entity;
 
 import java.util.UUID;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 
@@ -23,7 +23,7 @@ public class Reports {
     private UUID userId;
 
     @Column(name = "time_report")
-    private LocalTime timeReport;
+    private LocalDateTime timeReport;
 
     private Boolean state;
 
@@ -43,11 +43,11 @@ public class Reports {
         this.title = title;
     }
 
-    public String getDescription() {
+    public String getDescriptionReport() {
         return descriptionReport;
     }
 
-    public void setDescription(String descriptionReport) {
+    public void setDescriptionReport(String descriptionReport) {
         this.descriptionReport = descriptionReport;
     }
 
@@ -75,11 +75,11 @@ public class Reports {
         this.state = state;
     }
 
-    public LocalTime getTime() {
+    public LocalDateTime getTimeReport() {
         return timeReport;
     }
 
-    public void setTime(LocalTime timeReport) {
+    public void setTimeReport(LocalDateTime timeReport) {
         this.timeReport = timeReport;
     }
 }

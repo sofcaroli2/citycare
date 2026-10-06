@@ -1,7 +1,7 @@
 package it.unibo.citycare.solutions2.entity;
 
 import java.util.UUID;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
 
@@ -12,7 +12,7 @@ public class Solutions {
     private UUID id;
 
     @Column(name = "time_solution")
-    private LocalTime timeSolution;
+    private LocalDateTime timeSolution;
 
     @Column(name = "description_solution")
     private String descriptionSolution;
@@ -25,11 +25,11 @@ public class Solutions {
         this.id = id;
     }
 
-    public LocalTime getTime() {
+    public LocalDateTime getTimeSolution() {
         return timeSolution;
     }
 
-    public void setTime(LocalTime timeSolution) {
+    public void setTimeSolution(LocalDateTime timeSolution) {
         this.timeSolution = timeSolution;
     }
 
