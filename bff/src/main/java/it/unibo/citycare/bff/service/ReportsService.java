@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import it.unibo.citycare.bff.client.ReportsClient;
 import it.unibo.citycare.bff.dto.ReportsRequestDTO;
 import it.unibo.citycare.bff.dto.ReportsDTO;
+import it.unibo.citycare.bff.dto.ReportsSaveDTO;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,12 +28,30 @@ public class ReportsService {
         ReportsDTO[] reportsDTO = reportsClient.getReportsByUserIdAndState(userId, state);
         return Arrays.stream(reportsDTO)
                 .map(reportDTO -> new ReportsRequestDTO(
-                        reportDTO.id(),
                         reportDTO.title(),
                         reportDTO.descriptionReport(),
                         reportDTO.address(),
-                        reportDTO.timeReport()))
+                        reportDTO.timeReport(),
+                        reportDTO.residence()
+                    ))
                 .collect(Collectors.toList());
+    }
+
+    public List<ReportsRequestDTO> getReportsByState(Boolean state) {
+        ReportsDTO[] reportsDTO = reportsClient.getReportsByState(state);
+        return Arrays.stream(reportsDTO)
+                .map(reportDTO -> new ReportsRequestDTO(
+                        reportDTO.title(),
+                        reportDTO.descriptionReport(),
+                        reportDTO.address(),
+                        reportDTO.timeReport(),
+                        reportDTO.residence()
+                    ))
+                .collect(Collectors.toList());
+    }
+
+    public void saveReport(ReportsSaveDTO report) {
+        reportsClient.saveReport(report);
     }
 
 }

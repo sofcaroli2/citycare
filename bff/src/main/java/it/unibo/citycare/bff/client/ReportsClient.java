@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import it.unibo.citycare.bff.dto.ReportsDTO;
+import it.unibo.citycare.bff.dto.ReportsSaveDTO;
+
 
 @Component
 public class ReportsClient {
@@ -17,12 +19,19 @@ public class ReportsClient {
         this.localUrl = localUrl;
     }
 
-    
-
     public ReportsDTO[] getReportsByUserIdAndState(UUID userId, Boolean state) {
         String url = localUrl + "/reports/user/" + userId + "/state/" + state;
         return restTemplate.getForObject(url, ReportsDTO[].class);
     }
 
+    public ReportsDTO[] getReportsByState(Boolean state) {
+        String url = localUrl + "/reports/state/" + state;
+        return restTemplate.getForObject(url, ReportsDTO[].class);
+    }
+
+    public void saveReport(ReportsSaveDTO report) {
+        String url = localUrl + "/reports";
+        restTemplate.postForObject(url, report, Void.class);
+    }
 
 }
