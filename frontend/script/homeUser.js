@@ -54,7 +54,7 @@ async function postRequest() {
     };
 
     if (reportsTitle && reportsAddress && reportsDescription) {
-        const response = await fetch('/api/citycare/reports/reports', {
+        const response = await fetch('/api/citycare/reports', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

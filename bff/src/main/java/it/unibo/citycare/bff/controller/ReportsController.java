@@ -28,11 +28,11 @@ public class ReportsController {
     }
 
     @GetMapping("/state/{state}")
-    public List<ReportsRequestDTO> getReportsByState(@PathVariable Boolean state) { 
+    public List<ReportsRequestDTO> getReportsByState(@PathVariable Boolean state) {
         return reportsService.getReportsByState(state);
     }
 
-    @PostMapping("/reports")
+    @PostMapping
     public void saveReport(@RequestBody ReportsSaveDTO report) {
         reportsService.saveReport(report);
     }
