@@ -34,7 +34,6 @@ async function getUserInfo() {
 // popola la sezione utente
 async function populateUserInfo() {
     const userInfo = await getUserInfo();
-    console.log(userInfo);
     document.getElementById('nome').textContent = userInfo.name;
     document.getElementById('cognome').textContent = userInfo.surname;
     document.getElementById('residenza').textContent = userInfo.residence;
@@ -43,6 +42,7 @@ async function populateUserInfo() {
 
 // popola la tabella delle request
 async function populateRequests() {
+    const userInfo = await getUserInfo();
     const requests = await getRequests();
     const requestsContainer = document.getElementById('requestsContainer');
     requestsContainer.innerHTML = '';
@@ -53,6 +53,7 @@ async function populateRequests() {
             <td>${request.title}</td>
             <td>${request.descriptionReport}</td>
             <td>${request.address}</td>
+            <td>${userInfo.residence}</td>
             <td>${request.timeReport}</td>
         `;
         requestsContainer.appendChild(requestRow);
@@ -61,6 +62,7 @@ async function populateRequests() {
 
 // popola la tabella delle solution
 async function populateSolutions() {
+    const userInfo = await getUserInfo();
     const solutions = await getSolutions();
     const solutionsContainer = document.getElementById('solutionsContainer');
     solutionsContainer.innerHTML = '';
@@ -71,6 +73,7 @@ async function populateSolutions() {
             <td>${solution.title}</td>
             <td>${solution.descriptionReport}</td>
             <td>${solution.address}</td>
+            <td>${userInfo.residence}</td>
             <td>${solution.timeReport}</td>
         `;
         solutionsContainer.appendChild(solutionRow);

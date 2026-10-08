@@ -27,6 +27,8 @@ public class Reports {
 
     private Boolean state;
 
+    private String residence;
+
     public UUID getId() {
         return id;
     }
@@ -81,5 +83,13 @@ public class Reports {
 
     public void setTimeReport(LocalDateTime timeReport) {
         this.timeReport = timeReport;
+    }
+
+    public String getResidence() {
+        return residence;
+    }
+
+    public void setResidence(String residence) {
+        this.residence = residence;
     }
 }
