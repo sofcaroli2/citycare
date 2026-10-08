@@ -1,34 +1,36 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>homeUser</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CityCare</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" href="./images/favicon.ico" />
 </head>
 
 <body class="d-flex flex-column min-vh-100">
-
   <header class="bg-white border-bottom shadow-sm mb-3 sticky-top">
-    <div class="container-fluid px-4 py-2">
+    <div class="container py-2">
       <div class="d-flex align-items-center justify-content-between">
-        <a href="#" class="d-flex align-items-center text-decoration-none text-primary navbar-brand fs-3">
-          <i class="bi bi-geo-alt-fill me-2 fs-2"></i>
+        <a class="d-flex align-items-center text-decoration-none text-primary navbar-brand fs-3">
+          <i class="fa-solid fa-users-between-lines me-2"></i>
           <span>CityCare</span>
         </a>
         <!-- Sezione Utente -->
         <div class="d-flex align-items-center gap-3">
           <div class="text-end">
-            <div class="text-secondary">
-              Ciao <strong id="nome"></strong> <strong id="cognome"></strong>,
+            <div class="text-secondary">Ciao <strong id="nome"></strong> <strong id="cognome"></strong>,</div>
+            <div class="text-secondary">il tuo comune è
+              <strong id="residenza" class="text-secondary small m-0 p-0"></strong>
             </div>
-            <div id="residenza" class="text-secondary small"></div>
           </div>
 
-          <button class="btn btn-outline-danger btn-sm" type="button" onclick="location.href='login.html'">
+          <button class="btn btn-outline-danger btn-sm" type="button" onclick="location.href = 'login.html'">
             Logout
           </button>
         </div>
@@ -36,95 +38,81 @@
     </div>
   </header>
 
-  <main class="container-fluid">
-    <div class="sidebar-card p-4 h-100">
-      <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
-        <i class="bi bi-plus-circle-fill text-primary fs-4"></i>
-        <h2 class="h5 mb-0 fw-bold">Inserimento Dati</h2>
-      </div>
+  <main class="container">
+    <div class="content-card border border-primary p-4 mb-4">
+      <h4 class="fw-bold"><i class="fa-solid fa-bullhorn"></i>Crea una nuova segnalazione</h4>
+      <p class="text-secondary">
+        Qui puoi inserire nuove segnalazioni. Il tuo supporto è prezioso per
+        tutta la comunità!
+      </p>
 
       <form id="reportForm">
         <div class="row">
           <!-- Campo Titolo -->
-          <div class="mb-3 col-6">
-            <label for="title" class="form-label small fw-semibold text-secondary">
-              <i class="bi bi-pencil-square me-1"></i> Titolo
-            </label>
-            <input type="text" class="form-control" id="title" placeholder="Es. Buca su manto stradale" required>
+          <div class="col">
+            <div class="input-group mb-3">
+              <span class="input-group-text" id="inputGroup-sizing-default">
+                <i class="fa-solid fa-address-card me-2"></i> Titolo
+              </span>
+              <input id="saveTitle" type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default" placeholder="Inserisci un titolo..." required />
+            </div>
+            <!-- Campo Indirizzo -->
+            <div class="input-group">
+              <span class="input-group-text" id="inputGroup-sizing-default">
+                <i class="fa-solid fa-house-circle-exclamation me-2"></i>Indirizzo
+              </span>
+              <input id="saveAddress" type="text" class="form-control" aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-default" placeholder="Inserisci un indirizzo..." required />
+            </div>
           </div>
-          <!-- Campo Indirizzo -->
-          <div class="mb-3 col-6">
-            <label for="title" class="form-label small fw-semibold text-secondary">
-              <i class="bi bi-pencil-square me-1"></i> Indirizzo
-            </label>
-            <input type="text" class="form-control" id="title" placeholder="Es. Via Giuseppe Garibaldi 24" required>
+          <!-- Campo Descrizione -->
+          <div class="col">
+            <div class="input-group h-100">
+              <textarea id="saveDescription" class="form-control" id="description" rows="3"
+                placeholder="Descrivi il problema..." required></textarea>
+            </div>
           </div>
-        </div>
-        <!-- Campo Descrizione -->
-        <div class="input-group mb-3">
-          <textarea class="form-control" id="description" rows="3" placeholder="Descrivi il problema..."
-            required></textarea>
         </div>
 
         <!-- Nuova Segnalazione -->
-        <div class="text-center">
+        <div class="text-center mt-3">
           <button type="submit"
-            class="btn btn-primary w-50 btn-custom-submit shadow-sm align-items-center justify-content-center gap-2">
-            <i class="bi bi-plus-lg fs-5"></i>
+            class="btn btn-primary btn-custom-submit shadow-sm align-items-center justify-content-center gap-2">
             <span>Invia Segnalazione</span>
           </button>
         </div>
       </form>
     </div>
 
-    <div class="row g-4 pt-2 pb-3">
-
+    <div class="row mb-4">
       <!-- Registro Segnalazioni -->
-      <section class="col-12 col-lg-6">
+      <section class="col">
         <div class="content-card p-4 flex-fill">
-          <h3 class="h5 mb-3 fw-bold">Le mie Segnalazioni</h3>
-          <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-              <thead class="table-light">
-                <tr>
-                  <th scope="col" class="border-0">Titolo</th>
-                  <th scope="col" class="border-0">Descrizione</th>
-                  <th scope="col" class="border-0">Indirizzo</th>
-                  <th scope="col" class="border-0">Residenza</th>
-                  <th scope="col" class="border-0">Data e Ora</th>
-                </tr>
-              </thead>
-              <tbody id="requestsContainer">
-
-              </tbody>
-            </table>
+          <h4 class="fw-bold"><i class="fa-solid fa-sign-hanging"></i>Le mie Segnalazioni</h4>
+          <p class="text-secondary">
+            Le tue segnalazioni sono state inviate, trovi qui il riepilogo.
+            Verranno prese in carico a breve!
+          </p>
+          <div class="text-primary-emphasis" id="reportsContainer">
+            <!-- JS content -->
           </div>
         </div>
       </section>
 
       <!-- Registro Soluzioni -->
-      <section class="col-12 col-lg-6">
+      <section class="col">
         <div class="content-card p-4 flex-fill">
-          <h3 class="h5 mb-3 fw-bold">Soluzioni</h3>
-          <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-              <thead class="table-light">
-                <tr>
-                  <th scope="col" class="border-0">Titolo</th>
-                  <th scope="col" class="border-0">Descrizione</th>
-                  <th scope="col" class="border-0">Indirizzo</th>
-                  <th scope="col" class="border-0">Residenza</th>
-                  <th scope="col" class="border-0">Data e Ora</th>
-                </tr>
-              </thead>
-              <tbody id="solutionsContainer">
-
-              </tbody>
-            </table>
+          <h4 class="fw-bold"><i class="fa-solid fa-person-military-pointing"></i> Le nostre Soluzioni</h4>
+          <p class="text-secondary">
+            Le tue segnalazioni sono state prese in carico. Qui puoi trovare
+            tutto il supporto che hai dato!
+          </p>
+          <div class="text-primary-emphasis" id="solutionsContainer">
+            <!-- JS content -->
           </div>
         </div>
       </section>
-
     </div>
   </main>
 
