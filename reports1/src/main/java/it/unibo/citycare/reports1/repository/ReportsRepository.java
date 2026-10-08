@@ -15,6 +15,9 @@ public interface ReportsRepository extends JpaRepository<Reports, UUID> {
     // count() per contarli
     // existsById(id) per verificare se un ID esiste
 
+    // per ottenere tutti i report di un utente specifico con state = 0 (non risolti dall'admin) o 1 (risolti dall'admin)
     List<Reports> findByUserIdAndState(UUID userId, Boolean state); 
-    // per ottenere tutti i report di un utente specifico con state = 0 (non risolti dall'admin)
+    
+    // per ottenere tutti i report con state = 0 (non risolti dall'admin) o 1 (risolti dall'admin)
+    List<Reports> findByState(Boolean state);
 }
