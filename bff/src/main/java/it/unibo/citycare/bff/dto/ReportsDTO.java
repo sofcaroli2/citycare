@@ -10,6 +10,7 @@ public record ReportsDTO(
     String address, 
     UUID userID, 
     LocalDateTime timeReport, 
-    Boolean state) {
+    Boolean state,
+    String residence) {
     
 }
