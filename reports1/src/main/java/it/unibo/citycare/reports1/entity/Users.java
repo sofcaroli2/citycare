@@ -2,13 +2,14 @@ package it.unibo.citycare.reports1.entity;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.*;
 
 @Entity
 @Table(name = "users", schema = "public")
 public class Users {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id")
     private UUID userId;
 
@@ -63,6 +64,7 @@ public class Users {
         this.residence = residence;
     }
 
+    @JsonProperty("isAdmin")
     public boolean isAdmin() {
         return isAdmin;
     }
