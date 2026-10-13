@@ -24,12 +24,27 @@ public class SolutionsService {
         SolutionsDTO[] solutions = solutionsClient.getSolutionsByUserIdAndState(userId, state);
         return Arrays.stream(solutions)
                 .map(solution -> new SolutionsRequestDTO(
-                        solution.id(),
                         solution.title(),
                         solution.descriptionSolution(),
                         solution.address(),
-                        solution.timeSolution()
-                ))
+                        solution.timeSolution(),
+                        solution.residence()))
                 .collect(Collectors.toList());
     }
+
+    public List<SolutionsRequestDTO> getSolutionsByState(Boolean state) {
+        SolutionsDTO[] solutionsDTO = solutionsClient.getSolutionsByState(state);
+        return Arrays.stream(solutionsDTO)
+                .map(solution -> new SolutionsRequestDTO(
+                        solution.title(),
+                        solution.descriptionSolution(),
+                        solution.address(),
+                        solution.timeSolution(),
+                        solution.residence()))
+                .collect(Collectors.toList());
+    }
+
+    // public void updateReport(SolutionUpdateDTO solution) {
+    // solutionsClient.saveSolutions(solution);
+    // }
 }

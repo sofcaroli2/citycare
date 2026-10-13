@@ -4,6 +4,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+
 import it.unibo.citycare.bff.dto.SolutionsDTO;
 
 @Component
@@ -13,7 +14,7 @@ public class SolutionsClient {
     private final String localUrl;
 
     public SolutionsClient(final RestTemplate restTemplate,
-        final @Value("${api.solutions2-service.localurl}") String localUrl) {
+            final @Value("${api.solutions2-service.localurl}") String localUrl) {
         this.restTemplate = restTemplate;
         this.localUrl = localUrl;
     }
@@ -22,4 +23,14 @@ public class SolutionsClient {
         String url = localUrl + "/solutions/user/" + userId + "/state/" + state;
         return restTemplate.getForObject(url, SolutionsDTO[].class);
     }
+
+    public SolutionsDTO[] getSolutionsByState(Boolean state) {
+        String url = localUrl + "/solutions/state/" + state;
+        return restTemplate.getForObject(url, SolutionsDTO[].class);
+    }
+
+    // public void updateSolution(ReportsSaveDTO report) {
+    // String url = localUrl + "/reports";
+    // restTemplate.postForObject(url, report, Void.class);
+    // }
 }

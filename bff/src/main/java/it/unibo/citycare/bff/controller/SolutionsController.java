@@ -24,4 +24,14 @@ public class SolutionsController {
             @PathVariable Boolean state) {
         return solutionsService.getSolutionsByUserIdAndState(userId, state);
     }
+
+    @GetMapping("/state/{state}")
+    public List<SolutionsRequestDTO> getSolutionsByState(@PathVariable Boolean state) {
+        return solutionsService.getSolutionsByState(state);
+    }
+
+    // @PostMapping
+    // public void saveReport(@RequestBody ReportsSaveDTO report) {
+    //     reportsService.saveReport(report);
+    // }
 }
