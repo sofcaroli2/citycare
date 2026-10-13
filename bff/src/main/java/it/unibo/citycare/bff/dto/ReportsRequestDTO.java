@@ -1,12 +1,14 @@
 package it.unibo.citycare.bff.dto;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 // selezione di dati necessari al frontend
 public record ReportsRequestDTO(
-    String title, 
-    String descriptionReport, 
-    String address, 
-    LocalDateTime timeReport,
-    String residence) {
+        String title,
+        String descriptionReport,
+        String address,
+        LocalDateTime timeReport,
+        String residence,
+        UUID id) {
 }

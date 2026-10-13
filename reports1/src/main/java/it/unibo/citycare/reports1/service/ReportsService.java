@@ -49,7 +49,8 @@ public class ReportsService {
                 saved.getTitle(),
                 saved.getDescriptionReport(),
                 saved.getAddress(),
-                saved.getResidence());
+                saved.getResidence(),
+                saved.getUserId() );
 
         // System.out.println("SERVICE: prima di inviare Kafka");
         reportKafkaProducer.sendReportCreated(event);

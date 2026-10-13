@@ -32,7 +32,8 @@ public class ReportsService {
                         reportDTO.descriptionReport(),
                         reportDTO.address(),
                         reportDTO.timeReport(),
-                        reportDTO.residence()
+                        reportDTO.residence(),
+                        reportDTO.id()
                     ))
                 .collect(Collectors.toList());
     }
@@ -45,7 +46,8 @@ public class ReportsService {
                         reportDTO.descriptionReport(),
                         reportDTO.address(),
                         reportDTO.timeReport(),
-                        reportDTO.residence()
+                        reportDTO.residence(),
+                        reportDTO.id()
                     ))
                 .collect(Collectors.toList());
     }

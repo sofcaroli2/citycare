@@ -1,7 +1,5 @@
 package it.unibo.citycare.solutions2.kafka;
 
-import java.time.LocalDateTime;
-
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -31,8 +29,12 @@ public class ReportKafkaConsumer {
             final KafkaReportsDTO event = objectMapper.readValue(message, KafkaReportsDTO.class);
             Solutions solution = new Solutions();
             solution.setId(event.id());
-            solution.setTimeSolution(LocalDateTime.now());
-            solution.setDescriptionSolution("default");
+            solution.setTitle(event.title());
+            solution.setDescriptionReport(event.descriptionReport());
+            solution.setAddress(event.address());
+            solution.setUserId(event.userId());
+            solution.setState(false);
+            solution.setResidence(event.residence());
             solutionsRepository.save(solution);
         } catch (final JsonProcessingException e) {
             log.warn("Messaggio Kafka non valido, scartato: {}", message, e);
