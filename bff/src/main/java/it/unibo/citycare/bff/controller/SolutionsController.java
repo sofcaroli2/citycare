@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
+import it.unibo.citycare.bff.dto.SolutionUpdateDTO;
 import it.unibo.citycare.bff.dto.SolutionsRequestDTO;
 import it.unibo.citycare.bff.service.SolutionsService;
 
@@ -30,8 +33,9 @@ public class SolutionsController {
         return solutionsService.getSolutionsByState(state);
     }
 
-    // @PostMapping
-    // public void saveReport(@RequestBody ReportsSaveDTO report) {
-    //     reportsService.saveReport(report);
-    // }
+    @PutMapping
+    public void updateSolution(@RequestBody SolutionUpdateDTO solution) {
+        solutionsService.updateSolution(solution);
+    }
+
 }

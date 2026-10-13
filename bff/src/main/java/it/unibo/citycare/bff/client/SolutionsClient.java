@@ -4,7 +4,10 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 
+import it.unibo.citycare.bff.dto.SolutionUpdateDTO;
 import it.unibo.citycare.bff.dto.SolutionsDTO;
 
 @Component
@@ -29,8 +32,15 @@ public class SolutionsClient {
         return restTemplate.getForObject(url, SolutionsDTO[].class);
     }
 
-    // public void updateSolution(ReportsSaveDTO report) {
-    // String url = localUrl + "/reports";
-    // restTemplate.postForObject(url, report, Void.class);
-    // }
+    public void updateSolution(SolutionUpdateDTO solution) {
+        String url = localUrl + "/solutions";
+
+        HttpEntity<SolutionUpdateDTO> request = new HttpEntity<>(solution);
+
+        restTemplate.exchange(
+                url,
+                HttpMethod.PUT,
+                request,
+                Void.class);
+    }
 }

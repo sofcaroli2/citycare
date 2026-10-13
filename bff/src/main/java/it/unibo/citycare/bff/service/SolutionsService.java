@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import it.unibo.citycare.bff.client.SolutionsClient;
 import it.unibo.citycare.bff.dto.SolutionsDTO;
 import it.unibo.citycare.bff.dto.SolutionsRequestDTO;
+import it.unibo.citycare.bff.dto.SolutionUpdateDTO;
 
 @Service
 public class SolutionsService {
@@ -44,7 +45,7 @@ public class SolutionsService {
                 .collect(Collectors.toList());
     }
 
-    // public void updateReport(SolutionUpdateDTO solution) {
-    // solutionsClient.saveSolutions(solution);
-    // }
+    public void updateSolution(SolutionUpdateDTO solution) {
+    solutionsClient.updateSolution(solution);
+    }
 }
