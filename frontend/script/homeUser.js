@@ -1,49 +1,98 @@
-// GET richieste dell'utente
-async function getRequests() {
-    const response = await fetch('/api/citycare/reports/user/9bd1310f-c1d6-488c-9d27-ba156829e6ec/state/false', {
-        method: 'GET',
+const supabaseClient = window.supabase.createClient(
+    "https://feinvzouqgzmqyvizodo.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlaW52em91cWd6bXF5dml6b2RvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyMTAzMTEsImV4cCI6MjEwNDc4NjMxMX0.wTgivMEiETaiysYqhR8lGv3T62Lbo8wLABgpOPiWWHw"
+);
+
+// variabile globale per contenere info utente
+let userId = "";
+let residence = "";
+let accessToken = "";
+
+// Gestione del logout
+async function Logout() {
+    try {
+        const { error } = await supabaseClient.auth.signOut();
+
+        if (error) {
+            throw error;
+        }
+
+        localStorage.clear();
+        console.log(localStorage);
+        sessionStorage.clear();
+
+    } catch (error) {
+        console.error("Errore durante il logout:", error.message);
+    } finally {
+        window.location.replace("login.html");
+    }
+}
+const logoutButton = document.getElementById("logoutButton");
+if (logoutButton) {
+    logoutButton.addEventListener("click", Logout);
+}
+
+// GET informazioni dell'utente
+async function getUserInfo() {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+
+    if (!session) {
+        window.location.href = "login.html";
+        return null;
+    }
+
+    accessToken = session.access_token;
+
+    const response = await fetch(`/api/citycare/user/${session.user.id}`, {
         headers: {
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
         }
     });
-    const requests = await response.json();
-    return requests;
+
+    if (!response.ok) {
+        throw new Error("Impossibile caricare il profilo utente.");
+    }
+
+    const userInfo = await response.json();
+    userId = userInfo.userId;
+    residence = userInfo.residence;
+
+    return userInfo;
+}
+
+// GET richieste dell'utente
+async function getRequests() {
+    const response = await fetch(
+        `/api/citycare/reports/user/${userId}/state/false`,
+        {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        }
+    );
+    return await response.json();
 }
 
 // GET soluzioni dell'utente
 async function getSolutions() {
-    const response = await fetch('/api/citycare/reports/user/9bd1310f-c1d6-488c-9d27-ba156829e6ec/state/true', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
+    const response = await fetch(
+        `/api/citycare/reports/user/${userId}/state/true`,
+        {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
         }
-    });
-    const solutions = await response.json();
-    return solutions;
-}
-
-// variabile globale per contenere id utente
-let userId = "";
-let residence = ""
-// GET informazioni dell'utente
-async function getUserInfo() {
-    const response = await fetch('/api/citycare/user/9bd1310f-c1d6-488c-9d27-ba156829e6ec', {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    });
-    const userInfo = await response.json();
-    userId = userInfo.userId;
-    residence = userInfo.residence;
-    return userInfo;
+    );
+    return await response.json();
 }
 
 // POST nuova richiesta
 async function postRequest() {
-    const reportsTitle = document.getElementById('saveTitle').value;
-    const reportsAddress = document.getElementById('saveAddress').value;
-    const reportsDescription = document.getElementById('saveDescription').value;
+    const reportsTitle = document.getElementById("saveTitle").value;
+    const reportsAddress = document.getElementById("saveAddress").value;
+    const reportsDescription = document.getElementById("saveDescription").value;
 
     const requestData = {
         title: reportsTitle,
@@ -53,28 +102,58 @@ async function postRequest() {
         residence: residence
     };
 
-    if (reportsTitle && reportsAddress && reportsDescription) {
-        const response = await fetch('/api/citycare/reports', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(requestData)
-        });
-        if (response.ok) {
-            window.location.reload();
-        }
+    if (!reportsTitle || !reportsAddress || !reportsDescription) {
+        return;
+    }
+
+    const response = await fetch("/api/citycare/reports", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${accessToken}`
+        },
+        body: JSON.stringify(requestData)
+    });
+
+    if (response.ok) {
+        window.location.reload();
+    } else {
+        console.error("Invio segnalazione fallito:", response.status, await response.text());
     }
 }
 
 // popola la sezione utente
 async function populateUserInfo() {
     const userInfo = await getUserInfo();
-    document.getElementById('nome').textContent = userInfo.name;
-    document.getElementById('cognome').textContent = userInfo.surname;
-    document.getElementById('residenza').textContent = userInfo.residence;
+
+    if (!userInfo) {
+        window.location.href = "login.html";
+        return false;
+    }
+
+    document.getElementById("nome").textContent = userInfo.name;
+    document.getElementById("cognome").textContent = userInfo.surname;
+    document.getElementById("residenza").textContent = userInfo.residence;
+    return true;
 }
 
+// caricamento pagina utente, previa verifica
+async function initializeHomeUser() {
+    try {
+        const profileLoaded = await populateUserInfo();
+
+        if (!profileLoaded) {
+            return;
+        }
+
+        await Promise.all([
+            populateRequests(),
+            populateSolutions()
+        ]);
+    } catch (error) {
+        console.error("Errore nel caricamento della pagina utente:", error);
+    }
+}
 
 // popola la tabella delle request
 async function populateRequests() {
@@ -129,6 +208,4 @@ document.getElementById('reportForm').addEventListener('submit', async (event) =
     await postRequest();
 });
 
-populateUserInfo();
-populateRequests();
-populateSolutions();
+initializeHomeUser();

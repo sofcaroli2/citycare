@@ -1,9 +1,53 @@
+const supabaseClient = window.supabase.createClient(
+    "https://feinvzouqgzmqyvizodo.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZlaW52em91cWd6bXF5dml6b2RvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkyMTAzMTEsImV4cCI6MjEwNDc4NjMxMX0.wTgivMEiETaiysYqhR8lGv3T62Lbo8wLABgpOPiWWHw"
+);
+
+let accessToken = "";
+
+// impedisce di tornare alla pagina
+(async () => {
+    const { data: { session } } = await supabaseClient.auth.getSession();
+
+    if (session) {
+        // Se vuoi reindirizzare subito (es. a homeUser o controllando il ruolo):
+        const res = await fetch(`/api/citycare/user/${session.user.id}`, {
+            headers: { Authorization: `Bearer ${session.access_token}` }
+        });
+        const profile = await res.json();
+
+        window.location.replace(profile.isAdmin ? "homeAdmin.html" : "homeUser.html");
+    }
+})();
+
+// Gestione del logout
+async function Logout() {
+    try {
+        const { error } = await supabaseClient.auth.signOut();
+
+        if (error) {
+            throw error;
+        }
+
+    } catch (error) {
+        console.error("Errore durante il logout:", error.message);
+    } finally {
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.replace("login.html");
+    }
+}
+const logoutButton = document.getElementById("logoutButton");
+if (logoutButton) {
+    logoutButton.addEventListener("click", Logout);
+}
+
 // GET tutte le richieste
 async function getRequests() {
     const response = await fetch('/api/citycare/reports/state/0', {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
         }
     });
     const requests = await response.json();
@@ -15,7 +59,7 @@ async function getSolutions() {
     const response = await fetch('/api/citycare/reports/state/1', {
         method: 'GET',
         headers: {
-            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`
         }
     });
     const solutions = await response.json();
@@ -92,5 +136,41 @@ async function populateSolutions() {
     });
 }
 
-populateRequests();
-populateSolutions();
+async function initializeAdmin() {
+    const { data, error } = await supabaseClient.auth.getSession();
+
+    if (error || !data.session) {
+        window.location.replace("login.html");
+        return;
+    }
+
+    accessToken = data.session.access_token;
+
+    const profileResponse = await fetch(
+        `/api/citycare/user/${data.session.user.id}`,
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+    );
+
+    if (!profileResponse.ok) {
+        window.location.replace("login.html");
+        return;
+    }
+
+    const profile = await profileResponse.json();
+
+    if (profile.isAdmin !== true) {
+        window.location.replace("homeUser.html");
+        return;
+    }
+
+    try {
+        await Promise.all([
+            populateRequests(),
+            populateSolutions()
+        ]);
+    } catch (error) {
+        console.error("Errore nel caricamento della pagina admin:", error);
+    }
+}
+
+initializeAdmin();
