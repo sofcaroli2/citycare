@@ -5,21 +5,6 @@ const supabaseClient = window.supabase.createClient(
 
 let accessToken = "";
 
-// impedisce di tornare alla pagina
-(async () => {
-    const { data: { session } } = await supabaseClient.auth.getSession();
-
-    if (session) {
-        // Se vuoi reindirizzare subito (es. a homeUser o controllando il ruolo):
-        const res = await fetch(`/api/citycare/user/${session.user.id}`, {
-            headers: { Authorization: `Bearer ${session.access_token}` }
-        });
-        const profile = await res.json();
-
-        window.location.replace(profile.isAdmin ? "homeAdmin.html" : "homeUser.html");
-    }
-})();
-
 // Gestione del logout
 async function Logout() {
     try {
@@ -56,7 +41,7 @@ async function getRequests() {
 
 // GET tutte le soluzioni
 async function getSolutions() {
-    const response = await fetch('/api/citycare/reports/state/1', {
+    const response = await fetch('/api/citycare/solutions/state/1', {
         method: 'GET',
         headers: {
             Authorization: `Bearer ${accessToken}`
@@ -117,7 +102,7 @@ async function populateSolutions() {
     const numeroSolutions = document.getElementById('numero-solutions');
     numeroSolutions.textContent = solutions.length;
     solutionsContainer.innerHTML = '';
-
+    console.log(solutions);
     solutions.forEach(solution => {
         let elem = `
             <div class="row">
@@ -127,7 +112,7 @@ async function populateSolutions() {
                 </span>
             </div>
             <p class="card-text">
-                ${solution.descriptionReport}
+                ${solution.descriptionSolution}
                 <div class="fw-semibold">${solution.address} (${solution.residence})</div>
             </p>
             <hr>

@@ -77,7 +77,7 @@ async function getRequests() {
 // GET soluzioni dell'utente
 async function getSolutions() {
     const response = await fetch(
-        `/api/citycare/reports/user/${userId}/state/true`,
+        `/api/citycare/solutions/user/${userId}/state/true`,
         {
             method: "GET",
             headers: {
@@ -184,6 +184,7 @@ async function populateSolutions() {
     const solutions = await getSolutions();
     const solutionsContainer = document.getElementById('solutionsContainer');
     solutionsContainer.innerHTML = '';
+    console.log(solutions);
 
     solutions.forEach(solution => {
         let elem = `
@@ -194,7 +195,7 @@ async function populateSolutions() {
                 </span>
             </div>
             <p class="card-text">
-                ${solution.descriptionReport}
+                ${solution.descriptionSolution}
                 <div class="fw-semibold">${solution.address}</div>
             </p>
             <hr>
