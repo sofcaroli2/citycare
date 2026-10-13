@@ -3,6 +3,7 @@ package it.unibo.citycare.solutions2.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.UUID;
 
 import it.unibo.citycare.solutions2.entity.Solutions;
 import it.unibo.citycare.solutions2.repository.SolutionsRepository;
@@ -15,5 +16,13 @@ public class SolutionsService {
 
     public List<Solutions> getAllSolutions() {
         return solutionsRepository.findAll();
+    }
+
+    public List<Solutions> findByUserIdAndState(UUID userId, Boolean state) {
+        return solutionsRepository.findByUserIdAndState(userId, state);
+    }
+
+    public List<Solutions> findByState(Boolean state) {
+        return solutionsRepository.findByState(state);
     }
 }
