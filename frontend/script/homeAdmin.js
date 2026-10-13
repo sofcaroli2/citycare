@@ -51,6 +51,31 @@ async function getSolutions() {
     return solutions;
 }
 
+// POST descrizione della soluzione
+async function updateSolutions(requestId, descriptionSolution) {
+
+    const requestData = {
+        id: requestId,
+        descriptionSolution: descriptionSolution
+    };
+
+    const response = await fetch("/api/citycare/solutions", {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${accessToken}`
+        },
+        body: JSON.stringify(requestData)
+    });
+
+    if (response.ok) {
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        window.location.reload();
+    } else {
+        console.error("Invio segnalazione fallito:", response.status, await response.text());
+    }
+}
+
 
 // popola la tabella delle request
 async function populateRequests() {
@@ -62,37 +87,59 @@ async function populateRequests() {
 
     requests.forEach(request => {
         let elem = `
-            <div class="row">
-                <h5 class="card-title col-7 text-primary">${request.title}</h5>
-                <span class="text-body-secondary text-end col-5">
-                    ${request.timeReport.split('T')[0]}
-                </span>
+            <div class="request-card mb-3" data-id="${request.id}">
+                <div class="row">
+                    <h5 class="card-title col-7 text-primary">${request.title}</h5>
+                    <span class="text-body-secondary text-end col-5">
+                        ${request.timeReport.split('T')[0]}
+                    </span>
+                </div>
+                <p class="card-text mb-1">
+                    ${request.descriptionReport}
+                    <div class="fw-semibold">${request.address} (${request.residence})</div>
+                </p>
+                <div class="input-group mb-2">
+                    <textarea
+                        class="form-control solution-textarea"
+                        rows="3"
+                        placeholder="Descrivi la soluzione..."
+                        required
+                    ></textarea>
+                </div>
+                <div class="col d-flex align-items-end justify-content-end">
+                    <button
+                        type="button"
+                        class="btn btn-primary btn-custom-submit shadow-sm align-items-center justify-content-center gap-2 send-solution-btn"
+                    >
+                        <span>Invia Soluzione</span>
+                    </button>
+                </div>
+                <hr>
             </div>
-            <p class="card-text mb-1">
-                ${request.descriptionReport}
-                <div class="fw-semibold">${request.address} (${request.residence})</div>
-            </p>
-            <div class="input-group mb-2">
-                <textarea
-                class="form-control"
-                id="description"
-                rows="3"
-                placeholder="Descrivi la soluzione..."
-                required
-                ></textarea>
-            </div>
-            <div class="col d-flex align-items-end justify-content-end">
-                <button
-                    type="submit"
-                    class="btn btn-primary btn-custom-submit shadow-sm align-items-center justify-content-center gap-2"
-                >
-                    <span>Invia Soluzione</span>
-                </button>
-            </div>
-            <hr>
             `;
         reportsContainer.insertAdjacentHTML('beforeend', elem);
     });
+}
+
+// ottengo descriptionSolution in una specifica card
+const reportsContainer = document.getElementById('reportsContainer');
+
+if (reportsContainer) {
+    reportsContainer.addEventListener('click', async (event) => {
+        const button = event.target.closest('.send-solution-btn');
+        if (!button) return;
+        const card = button.closest('.request-card');
+        const requestId = card.getAttribute('data-id');
+        const textarea = card.querySelector('.solution-textarea');
+        const descriptionSolution = textarea.value.trim();
+
+        if (!descriptionSolution) {
+            return;
+        }
+
+        await updateSolutions(requestId, descriptionSolution);
+        textarea.value = "";
+    })
 }
 
 // popola la tabella delle soluzioni
@@ -102,7 +149,6 @@ async function populateSolutions() {
     const numeroSolutions = document.getElementById('numero-solutions');
     numeroSolutions.textContent = solutions.length;
     solutionsContainer.innerHTML = '';
-    console.log(solutions);
     solutions.forEach(solution => {
         let elem = `
             <div class="row">
