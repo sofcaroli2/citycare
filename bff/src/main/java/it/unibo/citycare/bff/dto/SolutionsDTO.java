@@ -4,12 +4,14 @@ import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record SolutionsDTO(
-    UUID id, 
-    String title, 
-    String descriptionSolution, 
-    String address, 
-    UUID userID, 
-    LocalDateTime timeSolution, 
-    Boolean state) {
-    
+        UUID id,
+        LocalDateTime timeSolution,
+        String descriptionSolution,
+        String title,
+        String descriptionReport,
+        String address,
+        UUID userID,
+        Boolean state,
+        String residence) {
+
 }
