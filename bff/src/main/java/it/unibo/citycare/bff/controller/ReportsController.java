@@ -5,6 +5,7 @@ import it.unibo.citycare.bff.service.ReportsService;
 import it.unibo.citycare.bff.dto.ReportsSaveDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,11 +23,13 @@ public class ReportsController {
     @Autowired
     private ReportsService reportsService;
 
+    @PreAuthorize("@accessPolicy.canAccessUser(#p0, authentication)")
     @GetMapping("/user/{userId}/state/{state}")
     public List<ReportsRequestDTO> getReportsByUserIdAndState(@PathVariable UUID userId, @PathVariable Boolean state) {
         return reportsService.getReportsByUserIdAndState(userId, state);
     }
 
+    @PreAuthorize("@accessPolicy.isAdmin(authentication)")
     @GetMapping("/state/{state}")
     public List<ReportsRequestDTO> getReportsByState(@PathVariable Boolean state) {
         return reportsService.getReportsByState(state);
