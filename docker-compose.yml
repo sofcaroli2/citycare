@@ -52,8 +52,8 @@ services:
       context: .
       dockerfile: solutions2/Dockerfile
     container_name: solutions2
-    ports:
-      - "8083:8083"
+    # ports:
+    #   - "8083:8083"
     env_file:
       - .env
     depends_on:
@@ -66,8 +66,8 @@ services:
       context: .
       dockerfile: reports1/Dockerfile
     container_name: reports1
-    ports:
-      - "8082:8082"
+    # ports:
+    #   - "8082:8082"
     env_file:
       - .env
     depends_on:
