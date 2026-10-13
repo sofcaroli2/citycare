@@ -3,10 +3,10 @@ package it.unibo.citycare.solutions2.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import it.unibo.citycare.solutions2.service.SolutionsService;
 import it.unibo.citycare.solutions2.entity.Solutions;
@@ -20,7 +20,7 @@ public class SolutionsController {
 
     @Autowired
     private SolutionsService solutionsService;
-  
+
     @GetMapping
     public List<Solutions> getAllSolutions() {
         return solutionsService.getAllSolutions();
@@ -36,8 +36,8 @@ public class SolutionsController {
         return solutionsService.findByState(state);
     }
 
-    // @PostMapping
-    // public void saveReport(@RequestBody Solutions solutions) {
-    //     solutionsService.saveSolutions(solutions);
-    // }
+    @PutMapping
+    public void updateSolution(@RequestBody Solutions solutions) {
+        solutionsService.updateSolution(solutions);
+    }
 }
