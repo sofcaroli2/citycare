@@ -16,16 +16,6 @@ public class ReportKafkaProducer {
         this.objectMapper = objectMapper;
     }
 
-    // public void sendReportCreated(KafkaReportsDTO dto) {
-    // try {
-    // String json = objectMapper.writeValueAsString(dto);
-    // kafkaTemplate.send("reports.created", json);
-    // } catch (JsonProcessingException e) {
-    // throw new RuntimeException("Errore nella serializzazione del report Kafka",
-    // e);
-    // }
-    // }
-
     public void sendReportCreated(KafkaReportsDTO dto) {
         System.out.println("KAFKA: preparo invio evento -> " + dto);
         try {

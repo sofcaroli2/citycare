@@ -32,12 +32,6 @@ public class ReportsService {
         return reportsRepository.findByState(state);
     }
 
-    // public Reports saveReport(Reports report) {
-    // report.setTimeReport(LocalDateTime.now());
-    // report.setState(false);
-    // return reportsRepository.save(report);
-    // }
-
     public Reports saveReport(Reports report) {
         report.setTimeReport(LocalDateTime.now());
         report.setState(false);

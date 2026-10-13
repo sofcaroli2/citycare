@@ -8,5 +8,6 @@ public record KafkaReportsDTO(
     String title, 
     String descriptionReport, 
     String address, 
-    String residence) {
+    String residence,
+    UUID userId) {
 }
