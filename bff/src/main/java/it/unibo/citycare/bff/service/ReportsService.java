@@ -33,8 +33,7 @@ public class ReportsService {
                         reportDTO.address(),
                         reportDTO.timeReport(),
                         reportDTO.residence(),
-                        reportDTO.id()
-                    ))
+                        reportDTO.id()))
                 .collect(Collectors.toList());
     }
 
@@ -47,13 +46,20 @@ public class ReportsService {
                         reportDTO.address(),
                         reportDTO.timeReport(),
                         reportDTO.residence(),
-                        reportDTO.id()
-                    ))
+                        reportDTO.id()))
                 .collect(Collectors.toList());
     }
 
-    public void saveReport(ReportsSaveDTO report) {
-        reportsClient.saveReport(report);
+    public void saveReport(ReportsSaveDTO report, UUID authenticatedUserId) {
+        // nuova dto con i dati sella segnalazione e id ricavato dal JWT
+        ReportsSaveDTO secureReport = new ReportsSaveDTO(
+                report.title(),
+                report.descriptionReport(),
+                report.address(),
+                report.residence(),
+                authenticatedUserId);
+
+        reportsClient.saveReport(secureReport);
     }
 
 }
