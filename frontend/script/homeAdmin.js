@@ -5,6 +5,19 @@ const supabaseClient = window.supabase.createClient(
 
 let accessToken = "";
 
+// gestisce il reindirizzamento alla pagina del login se il token non è valido
+async function handleUnauthorized(response) {
+    if (response.status === 401) {
+        await supabaseClient.auth.signOut();
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.replace("login.html");
+        throw new Error("Sessione scaduta o token non valido");
+    }
+
+    return response;
+}
+
 // Gestione del logout
 async function Logout() {
     try {
@@ -35,6 +48,9 @@ async function getRequests() {
             Authorization: `Bearer ${accessToken}`
         }
     });
+
+    await handleUnauthorized(response);
+
     const requests = await response.json();
     return requests;
 }
@@ -47,6 +63,9 @@ async function getSolutions() {
             Authorization: `Bearer ${accessToken}`
         }
     });
+
+    await handleUnauthorized(response);
+
     const solutions = await response.json();
     return solutions;
 }
@@ -67,6 +86,9 @@ async function updateSolutions(requestId, descriptionSolution) {
         },
         body: JSON.stringify(requestData)
     });
+
+    await handleUnauthorized(response);
+
 
     if (response.ok) {
         await new Promise(resolve => setTimeout(resolve, 2000));

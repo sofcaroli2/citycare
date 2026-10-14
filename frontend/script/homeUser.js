@@ -8,6 +8,19 @@ let userId = "";
 let residence = "";
 let accessToken = "";
 
+// gestisce il reindirizzamento alla pagina del login se il token non è valido
+async function handleUnauthorized(response) {
+    if (response.status === 401) {
+        await supabaseClient.auth.signOut();
+        localStorage.clear();
+        sessionStorage.clear();
+        window.location.replace("login.html");
+        throw new Error("Sessione scaduta o token non valido");
+    }
+
+    return response;
+}
+
 // Gestione del logout
 async function Logout() {
     try {
@@ -49,6 +62,8 @@ async function getUserInfo() {
         }
     });
 
+    await handleUnauthorized(response);
+
     if (!response.ok) {
         throw new Error("Impossibile caricare il profilo utente.");
     }
@@ -71,6 +86,9 @@ async function getRequests() {
             }
         }
     );
+
+    await handleUnauthorized(response);
+
     return await response.json();
 }
 
@@ -85,6 +103,9 @@ async function getSolutions() {
             }
         }
     );
+
+    await handleUnauthorized(response);
+
     return await response.json();
 }
 
@@ -114,6 +135,8 @@ async function postRequest() {
         },
         body: JSON.stringify(requestData)
     });
+
+    await handleUnauthorized(response);
 
     if (response.ok) {
         window.location.reload();
